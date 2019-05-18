@@ -30,8 +30,8 @@ public class MoveController {
 
     @MessageMapping("/room/{roomID}")
     public void processMove(@DestinationVariable String roomID, Move message) throws Exception {
-        System.out.println(String.format("Got destination message from %d, command: %d", message.getID(), message.getTurn()));
-        lobby.getRoom(Integer.parseInt(roomID)).getGame().turnPlayer(message.getID(), message.getTurn());
+        System.out.println(String.format("Got destination message from %d, command: %d", message.getId(), message.getTurn()));
+        lobby.getRoom(Integer.parseInt(roomID)).getGame().turnPlayer(message.getId(), message.getTurn());
     }
 
 
