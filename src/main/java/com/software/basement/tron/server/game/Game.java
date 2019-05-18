@@ -61,9 +61,9 @@ public class Game extends Thread {
     private void iteration() {
         for (Player player : players.values()) {
             if(!player.isDead())
-            player.moveIteration();
+                player.moveIteration();
             try {
-                if (board[getHeight() - player.getY()][player.getX()] == 1) {
+                if (player.isHasBeenRecentlyMoved() && board[getHeight() - player.getY()][player.getX()] == 1) {
                     //TODO change it maybe
                     player.setDead(true);
                     player.setPosition(new Point(-1, -1));
