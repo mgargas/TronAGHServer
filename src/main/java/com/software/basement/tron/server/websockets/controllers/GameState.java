@@ -7,15 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class State {
+public class GameState {
 
     private Map<Integer, Point> players;
 
-    public State(List<Player> playerList){
+    public GameState(Map<Integer, Player> playerMap){
 
         this.players = new HashMap<>();
 
-        for(Player player : playerList){
+        for(Player player : playerMap.values()){
             this.players.put(player.getId(), player.getPosition());
         }
     }

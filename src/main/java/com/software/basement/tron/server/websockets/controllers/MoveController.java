@@ -32,12 +32,12 @@ public class MoveController {
     public void processMove(@DestinationVariable String roomID, Move message) throws Exception {
         System.out.println("Here!");
         //stateData = lobby.getRoom(room).getGame().processDestination();
-        //this.sendState(new State(stateData), roomID);
+        //this.sendState(new GameState(stateData), roomID);
     }
 
 
-    public void sendState(State state, String roomID){
-        this.template.convertAndSend("/topic/room/"+roomID, state);
+    public void sendState(GameState gameState, String roomID){
+        this.template.convertAndSend("/topic/room/"+roomID, gameState);
     }
 
 }

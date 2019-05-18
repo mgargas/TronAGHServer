@@ -1,11 +1,12 @@
 package com.software.basement.tron.server.game;
 
+import com.software.basement.tron.server.websockets.controllers.GameState;
+
 import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 
 @Data
 public class Game extends Thread {
@@ -15,13 +16,15 @@ public class Game extends Thread {
     private HashMap<Integer, Player> players;
     private int[][] board;
     private int numberOfLivePlayers;
+    private int roomID;
 
     private MoveController moveController;
 
-    public Game(int height, int width, MoveController moveController) {
+    public Game(int height, int width, MoveController moveController, int roomID) {
         this.height = height;
         this.width = width;
         this.moveController = moveController;
+        this.roomID = roomID;
     }
 
     public void initGame() {
@@ -53,6 +56,7 @@ public class Game extends Thread {
                 board[getHeight() - player.getY()][player.getX()] = 1;
             }
         }
+        this.moveController.sendState(new GameState(this.players), String.valueOf(roomID));
 
     }
 

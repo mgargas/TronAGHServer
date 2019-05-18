@@ -22,7 +22,7 @@ public class Room {
     private Game game;
 
     public void createGame(){
-        game = new Game(50, 50, moveController);
+        game = new Game(50, 50, moveController, this.id);
     }
 
     public void setPlayersIds(List<Integer> playersIds){
