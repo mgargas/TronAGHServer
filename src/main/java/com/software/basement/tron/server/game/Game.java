@@ -60,10 +60,13 @@ public class Game extends Thread {
 
     private void iteration() {
         for (Player player : players.values()) {
+            if(!player.isDead())
             player.moveIteration();
             try {
                 if (board[getHeight() - player.getY()][player.getX()] == 1) {
-                    //TODO send info about death
+                    //TODO change it maybe
+                    player.setDead(true);
+                    player.setPosition(new Point(-1, -1));
                     numberOfLivePlayers--;
                     if (numberOfLivePlayers == 1) endGame();
 
@@ -71,7 +74,8 @@ public class Game extends Thread {
                     board[getHeight() - player.getY()][player.getX()] = 1;
                 }
             } catch (IndexOutOfBoundsException ex){
-                //TODO send info about death
+                player.setDead(true);
+                player.setPosition(new Point(-1, -1));
             }
         }
         if(moveController == null) System.out.println(">GAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NULLLL XDDDD");

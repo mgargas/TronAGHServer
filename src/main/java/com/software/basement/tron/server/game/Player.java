@@ -15,6 +15,7 @@ public class Player {
     private Point position;
     private String name;
     private Direction direction;
+    private boolean isDead;
 
 
     public Player(int id, String name) {
@@ -26,6 +27,7 @@ public class Player {
         this.position = new Point(0, 0);
         this.name = name;
         this.direction = null;
+        this.isDead = false;
     }
 
     public int getX() {
