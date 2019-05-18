@@ -25,6 +25,18 @@ public class AccountController {
         else return null;
     }
 
+    @PutMapping
+    public Account editAccount(@RequestBody Account account) {
+        accountsRepository.save(account);
+        return account;
+    }
+
+    @PostMapping
+    public Account createRoom(@RequestBody Account account) {
+        accountsRepository.save(account);
+        return account;
+    }
+
 
 
 
