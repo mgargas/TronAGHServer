@@ -13,13 +13,11 @@ public class Game extends Thread {
     private int width;
     private HashMap<Integer, Player> players;
     private int[][] board;
-    private int playersLimit;
     private int numberOfLivePlayers;
 
-    public Game(int height, int width, int playersLimit) {
+    public Game(int height, int width) {
         this.height = height;
         this.width = width;
-        this.playersLimit = playersLimit;
     }
 
     public void initGame() {
