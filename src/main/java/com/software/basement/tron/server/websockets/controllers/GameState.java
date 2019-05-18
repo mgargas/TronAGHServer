@@ -3,21 +3,18 @@ package com.software.basement.tron.server.websockets.controllers;
 import com.software.basement.tron.server.game.Player;
 import lombok.Data;
 
-import java.awt.*;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 @Data
 public class GameState {
 
-    private Map<Integer, Point> players;
+    private List<PlayerInfo> playersInfo;
 
     public GameState(Map<Integer, Player> playerMap) {
 
-        this.players = new HashMap<>();
-
         for (Player player : playerMap.values()) {
-            this.players.put(player.getId(), player.getPosition());
+            new PlayerInfo(player.getId(), player.getPosition());
         }
     }
 }
