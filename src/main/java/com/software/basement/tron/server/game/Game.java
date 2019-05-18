@@ -1,5 +1,6 @@
 package com.software.basement.tron.server.game;
 
+import java.awt.*;
 import java.util.List;
 
 public class Game {
@@ -31,5 +32,25 @@ public class Game {
     public void setWidth(int width) {
         this.width = width;
     }
-    
+
+    public void initGame(){
+
+
+        switch (players.size()){
+            case 1: players.get(0).setDirection(Direction.N);
+                    players.get(0).setPosition(new Point(50,20));
+                    break;
+        }
+        System.out.println(board[20][20]);
+        System.out.println(board[40][40]);
+    }
+
+    private void iteration(){
+        for(Player player : players){
+            board[getHeight() - player.getY()][player.getX()] = 1;
+            player.move();
+        }
+
+    }
+
 }
