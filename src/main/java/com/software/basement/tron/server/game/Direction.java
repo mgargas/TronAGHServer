@@ -1,5 +1,5 @@
 package com.software.basement.tron.server.game;
 
 public enum Direction {
-    N,S,W,E
+    N, S, W, E
 }

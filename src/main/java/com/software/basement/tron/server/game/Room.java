@@ -2,27 +2,21 @@ package com.software.basement.tron.server.game;
 
 public class Room {
 
-    private Integer maxCapacity;
+    private Integer maxPlayers;
+    private Integer minPlayers;
     private Integer availableSlots;
 
-    public Room(Integer maxCapacity) {
-        this.maxCapacity = maxCapacity;
-        this.availableSlots = maxCapacity;
+    public Room(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
+        this.availableSlots = maxPlayers;
     }
 
-    public void joinRoom() {
-        if (!canPlayerJoin())
-            throw new RuntimeException("Room full, cannot join.");
-
-        availableSlots--;
+    public Integer getMaxPlayers() {
+        return maxPlayers;
     }
 
-    public Integer getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void setMaxCapacity(Integer maxCapacity) {
-        this.maxCapacity = maxCapacity;
+    public void setMaxPlayers(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
     public Integer getAvailableSlots() {
@@ -31,9 +25,5 @@ public class Room {
 
     public void setAvailableSlots(Integer availableSlots) {
         this.availableSlots = availableSlots;
-    }
-
-    private boolean canPlayerJoin() {
-        return availableSlots > 0;
     }
 }
