@@ -16,7 +16,7 @@ public class GameState {
         playersInfo = new ArrayList<>();
 
         for (Player player : playerMap.values()) {
-            new PlayerInfo(player.getId(), player.getPosition());
+            playersInfo.add(new PlayerInfo(player.getId(), player.getPosition()));
         }
     }
 }
