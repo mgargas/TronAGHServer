@@ -1,5 +1,6 @@
 package com.software.basement.tron.server.game;
 
+import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
 
 import java.awt.*;
@@ -15,9 +16,12 @@ public class Game extends Thread {
     private int[][] board;
     private int numberOfLivePlayers;
 
-    public Game(int height, int width) {
+    private MoveController moveController;
+
+    public Game(int height, int width, MoveController moveController) {
         this.height = height;
         this.width = width;
+        this.moveController = moveController;
     }
 
     public void initGame() {

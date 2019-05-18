@@ -2,6 +2,7 @@ package com.software.basement.tron.server.game;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Room {
+
+    @Autowired
+    MoveController moveController;
 
     private Integer id;
     private Integer maxPlayers = 6;
@@ -26,6 +30,7 @@ public class Room {
             if (playersIds.size() == 2) {
                 Thread.sleep(5000);
                 createGame();
+                game.start();
             }
         } catch (Exception ex){
             ex.printStackTrace();
