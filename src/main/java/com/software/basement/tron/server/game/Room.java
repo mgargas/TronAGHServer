@@ -3,6 +3,7 @@ package com.software.basement.tron.server.game;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -10,7 +11,7 @@ import java.util.List;
 public class Room {
 
     private Integer id;
-    private Integer maxPlayers;
-    private Integer minPlayers;
-    private List<Integer> playersIds;
+    private Integer maxPlayers = 6;
+    private Integer minPlayers = 2;
+    private List<Integer> playersIds = new ArrayList<>();
 }
