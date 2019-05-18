@@ -21,6 +21,7 @@ public class Lobby {
     }
 
     public void addRoom(Room room) {
+        room.setId(nextRoomId);
         rooms.put(nextRoomId, room);
         nextRoomId++;
     }
