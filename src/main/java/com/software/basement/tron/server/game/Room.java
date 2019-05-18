@@ -4,10 +4,13 @@ public class Room {
 
     private Integer maxPlayers;
     private Integer minPlayers;
-    private Integer availableSlots;
+    private Integer availableSlots = 0;
 
-    public Room(Integer maxPlayers) {
+    public Room(){}
+
+    public Room(Integer maxPlayers, Integer minPlayers) {
         this.maxPlayers = maxPlayers;
+        this.minPlayers = minPlayers;
         this.availableSlots = maxPlayers;
     }
 
@@ -17,6 +20,14 @@ public class Room {
 
     public void setMaxPlayers(Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public Integer getMinPlayers() {
+        return minPlayers;
+    }
+
+    public void setMinPlayers(Integer minPlayers) {
+        this.minPlayers = minPlayers;
     }
 
     public Integer getAvailableSlots() {
