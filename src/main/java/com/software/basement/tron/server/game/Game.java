@@ -6,7 +6,9 @@ import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 public class Game extends Thread {
@@ -33,12 +35,18 @@ public class Game extends Thread {
         for (Player player : players.values()) {
             board[getHeight() - player.getY()][player.getX()] = 1;
         }
+        List<Player> playersList = new ArrayList<>(players.values());
 
         switch (players.size()) {
             case 1:
                 players.get(0).setDirection(Direction.N);
                 players.get(0).setPosition(new Point(50, 20));
                 break;
+            case 2:
+                players.get(0).setDirection(Direction.N);
+                players.get(0).setPosition(new Point(10, 0));
+                players.get(1).setDirection(Direction.N);
+                players.get(1).setPosition(new Point(40, 0));
         }
         System.out.println(board[20][20]);
         System.out.println(board[40][40]);
