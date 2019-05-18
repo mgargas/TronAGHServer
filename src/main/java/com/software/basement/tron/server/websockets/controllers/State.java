@@ -24,4 +24,9 @@ public class State {
         return this.players;
     }
 
+    public void setPlayers(Map<Integer, Point> players) {
+        this.players = players;
+    }
+
+
 }

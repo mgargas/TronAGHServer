@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,7 +22,6 @@ public class MoveController {
     @Autowired
     Lobby lobby;
 
-
     @Autowired
     public MoveController(SimpMessagingTemplate template){
         this.template = template;
@@ -29,9 +29,10 @@ public class MoveController {
 
 
     @MessageMapping("/room/{roomID}")
-    public void processMove(@DestinationVariable String room, Move message) throws Exception {
+    public void processMove(@DestinationVariable String roomID, Move message) throws Exception {
         System.out.println("Here!");
-        //lobby.getRoom(room).getGame().processDestination();
+        //stateData = lobby.getRoom(room).getGame().processDestination();
+        //this.sendState(new State(stateData), roomID);
     }
 
 
