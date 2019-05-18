@@ -1,4 +1,4 @@
-package com.software.basement.tron.server.websockets.hello;
+package com.software.basement.tron.server.websockets.controllers;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

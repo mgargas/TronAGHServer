@@ -2,18 +2,23 @@ package com.software.basement.tron.server.websockets.controllers;
 
 public class Move {
 
-    private String content;
+    private Integer id;
+    private Integer turn;
 
     public Move(){};
 
-    public Move(String content) {
-        this.content = content;
+    public Move(Integer id, Integer turn){
+        this.id = id;
+        this.turn = turn;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getID() {
+        return this.id;
     }
 
+    public Integer getTurn(){
+        return this.turn;
+    }
 
 
 }
