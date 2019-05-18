@@ -3,13 +3,14 @@ package com.software.basement.tron.server.game;
 import java.awt.*;
 import java.util.List;
 
-public class Game {
+public class Game extends Thread{
 
     private int height;
     private int width;
     private List<Player> players;
     private int[][] board;
     private int playersLimit;
+    private int numberOfLivePlayers;
 
     public Game(int height, int width, int playersLimit) {
         this.height = height;
@@ -35,6 +36,11 @@ public class Game {
 
     public void initGame(){
 
+        numberOfLivePlayers = players.size();
+
+        for(Player player : players){
+            board[getHeight() - player.getY()][player.getX()] = 1;
+        }
 
         switch (players.size()){
             case 1: players.get(0).setDirection(Direction.N);
@@ -47,10 +53,28 @@ public class Game {
 
     private void iteration(){
         for(Player player : players){
-            board[getHeight() - player.getY()][player.getX()] = 1;
             player.move();
+            if(board[getHeight() - player.getY()][player.getX()] == 1){
+                //TODO send info about death
+                numberOfLivePlayers--;
+                if(numberOfLivePlayers == 1) endGame();
+
+            } else {
+                board[getHeight() - player.getY()][player.getX()] = 1;
+            }
         }
 
     }
 
+    private void endGame(){
+        //TODO send info about end game and result in the future
+        interrupt();
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            iteration();
+        }
+    }
 }

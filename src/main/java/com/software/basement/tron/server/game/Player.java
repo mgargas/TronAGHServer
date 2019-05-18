@@ -10,6 +10,7 @@ public class Player {
     private int lives;
     private boolean isImmortal;
     private int speed;
+    private int countSpeed;
     private Point position;
     private String name;
     private Direction direction;
@@ -19,7 +20,8 @@ public class Player {
         this.id = id;
         this.lives = 3;
         this.isImmortal = false;
-        this.speed = 1;
+        this.speed = 10;
+        this.countSpeed = 10;
         this.position = new Point(0,0);
         this.name = name;
         this.direction = null;
@@ -89,10 +91,23 @@ public class Player {
         this.id = id;
     }
 
-    public List<Point> move(){
-        List<Point> points = new ArrayList<>();
-        int dest = getSpeed();
+    public Point moveIteration(){
+        this.countSpeed--;
+        if(countSpeed == 0){
+            countSpeed = speed;
+            return move();
+        } else {
+            return getPosition();
+        }
+    }
 
-
+    public Point move(){
+        switch (getDirection()){
+            case N : return new Point(getX(), getY() + 1);
+            case S : return new Point(getX(), getY() - 1);
+            case W : return new Point(getX() - 1, getY());
+            case E : return new Point(getX() + 1, getY());
+        }
+        return null;
     }
 }
