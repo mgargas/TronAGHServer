@@ -92,4 +92,8 @@ public class Game extends Thread {
         else
             player.setDirection(player.getDirection().turnRight(player.getDirection()));
     }
+
+    public void addPlayer(int id){
+        new Player(id, "name");
+    }
 }

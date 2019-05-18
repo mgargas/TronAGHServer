@@ -28,9 +28,11 @@ public class Room {
     public void setPlayersIds(List<Integer> playersIds){
         try {
             this.playersIds = playersIds;
-            if (playersIds.size() == 2) {
+            if (playersIds.size() == 1) {
                 Thread.sleep(5000);
                 createGame();
+                game.addPlayer(playersIds.get(0));
+                game.initGame();
                 game.start();
             }
         } catch (Exception ex){
