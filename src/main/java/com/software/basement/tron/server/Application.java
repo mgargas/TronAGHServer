@@ -15,14 +15,4 @@ public class Application {
 
 
     }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/room").allowedOrigins("http://192.168.43.48:9999");
-            }
-        };
-    }
 }
