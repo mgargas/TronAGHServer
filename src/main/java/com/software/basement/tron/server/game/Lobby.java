@@ -1,10 +1,12 @@
 package com.software.basement.tron.server.game;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 @Component
 public class Lobby {
 
@@ -16,10 +18,6 @@ public class Lobby {
             return rooms.get(roomId);
         else
             throw new RuntimeException("Room with ID " + roomId + " not found.");
-    }
-
-    public Map<Integer, Room> getRooms() {
-        return rooms;
     }
 
     public void addRoom(Room room) {
