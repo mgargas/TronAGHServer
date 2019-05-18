@@ -12,6 +12,5 @@ public class Room {
     private Integer id;
     private Integer maxPlayers;
     private Integer minPlayers;
-    private Integer availableSlots = 0;
     private List<Integer> playersIds;
 }
