@@ -3,6 +3,7 @@ package com.software.basement.tron.server.game;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -10,7 +11,7 @@ public class Game extends Thread {
 
     private int height;
     private int width;
-    private List<Player> players;
+    private HashMap<Integer, Player> players;
     private int[][] board;
     private int playersLimit;
     private int numberOfLivePlayers;
@@ -24,7 +25,7 @@ public class Game extends Thread {
     public void initGame() {
         numberOfLivePlayers = players.size();
 
-        for (Player player : players) {
+        for (Player player : players.values()) {
             board[getHeight() - player.getY()][player.getX()] = 1;
         }
 
@@ -39,7 +40,7 @@ public class Game extends Thread {
     }
 
     private void iteration() {
-        for (Player player : players) {
+        for (Player player : players.values()) {
             player.move();
             if (board[getHeight() - player.getY()][player.getX()] == 1) {
                 //TODO send info about death
@@ -63,5 +64,13 @@ public class Game extends Thread {
         while (true) {
             iteration();
         }
+    }
+
+    public void turnPlayer(int id, int turn){
+        Player player = players.get(id);
+        if(turn == -1)
+            player.setDirection(player.getDirection().turnLeft(player.getDirection()));
+        else
+            player.setDirection(player.getDirection().turnRight(player.getDirection()));
     }
 }
