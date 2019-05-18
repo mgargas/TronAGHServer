@@ -21,8 +21,8 @@ public class Player {
         this.id = id;
         this.lives = 3;
         this.isImmortal = false;
-        this.speed = 10;
-        this.countSpeed = 10;
+        this.speed = 2;
+        this.countSpeed = 2;
         this.position = new Point(0, 0);
         this.name = name;
         this.direction = null;
@@ -36,27 +36,28 @@ public class Player {
         return position.y;
     }
 
-    public Point moveIteration() {
+    public void moveIteration() {
         this.countSpeed--;
         if (countSpeed == 0) {
             countSpeed = speed;
-            return move();
-        } else {
-            return getPosition();
+            move();
         }
     }
 
-    public Point move() {
+    public void move() {
         switch (getDirection()) {
             case N:
-                return new Point(getX(), getY() + 1);
+                setPosition(new Point(getX(), getY() + 1));
+                break;
             case S:
-                return new Point(getX(), getY() - 1);
+                setPosition(new Point(getX(), getY() - 1));
+                break;
             case W:
-                return new Point(getX() - 1, getY());
+                setPosition(new Point(getX() - 1, getY()));
+                break;
             case E:
-                return new Point(getX() + 1, getY());
+                setPosition(new Point(getX() + 1, getY()));
+                break;
         }
-        return null;
     }
 }

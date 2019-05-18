@@ -35,9 +35,9 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public Room editRoom(@RequestBody Room room, @PathVariable Integer id) {
+    public List<Room> editRoom(@RequestBody Room room, @PathVariable Integer id) {
         lobby.getRooms().put(id, room);
-        return lobby.getRoom(id);
+        return new ArrayList<>(lobby.getRooms().values());
     }
 
     @PostMapping

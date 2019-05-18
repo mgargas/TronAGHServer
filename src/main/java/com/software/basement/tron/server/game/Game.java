@@ -27,43 +27,54 @@ public class Game extends Thread {
         this.width = width;
         this.moveController = moveController;
         this.roomID = roomID;
+        this.players = new HashMap<>();
+        this.board = new int[height][width];
     }
 
     public void initGame() {
         numberOfLivePlayers = players.size();
 
-        for (Player player : players.values()) {
-            board[getHeight() - player.getY()][player.getX()] = 1;
-        }
         List<Player> playersList = new ArrayList<>(players.values());
 
         switch (players.size()) {
             case 1:
-                players.get(0).setDirection(Direction.N);
-                players.get(0).setPosition(new Point(50, 20));
+                playersList.get(0).setDirection(Direction.N);
+                playersList.get(0).setPosition(new Point(25, 10));
                 break;
             case 2:
-                players.get(0).setDirection(Direction.N);
-                players.get(0).setPosition(new Point(10, 0));
-                players.get(1).setDirection(Direction.N);
-                players.get(1).setPosition(new Point(40, 0));
+                playersList.get(0).setDirection(Direction.N);
+                playersList.get(0).setPosition(new Point(10, 0));
+                playersList.get(1).setDirection(Direction.N);
+                playersList.get(1).setPosition(new Point(40, 0));
         }
+
+        System.out.println(players.values());
+        for (Player player : players.values()) {
+            board[getHeight() - player.getY()][player.getX()] = 1;
+        }
+
+
         System.out.println(board[20][20]);
         System.out.println(board[40][40]);
     }
 
     private void iteration() {
         for (Player player : players.values()) {
-            player.move();
-            if (board[getHeight() - player.getY()][player.getX()] == 1) {
-                //TODO send info about death
-                numberOfLivePlayers--;
-                if (numberOfLivePlayers == 1) endGame();
+            player.moveIteration();
+            try {
+                if (board[getHeight() - player.getY()][player.getX()] == 1) {
+                    //TODO send info about death
+                    numberOfLivePlayers--;
+                    if (numberOfLivePlayers == 1) endGame();
 
-            } else {
-                board[getHeight() - player.getY()][player.getX()] = 1;
+                } else {
+                    board[getHeight() - player.getY()][player.getX()] = 1;
+                }
+            } catch (IndexOutOfBoundsException ex){
+                //TODO send info about death
             }
         }
+        if(moveController == null) System.out.println(">GAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NULLLL XDDDD");
         this.moveController.sendState(new GameState(this.players), String.valueOf(roomID));
 
     }
@@ -94,6 +105,6 @@ public class Game extends Thread {
     }
 
     public void addPlayer(int id){
-        new Player(id, "name");
+        players.put(id,new Player(id, "name"));
     }
 }

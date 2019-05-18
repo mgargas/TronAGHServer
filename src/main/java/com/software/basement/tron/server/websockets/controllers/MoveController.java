@@ -1,5 +1,6 @@
 package com.software.basement.tron.server.websockets.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.software.basement.tron.server.game.Lobby;
 import com.software.basement.tron.server.game.Player;
 import com.software.basement.tron.server.websockets.hello.GreetingController;
@@ -19,6 +20,7 @@ public class MoveController {
 
     private SimpMessagingTemplate template;
 
+    @JsonIgnore
     @Autowired
     Lobby lobby;
 
@@ -31,7 +33,12 @@ public class MoveController {
     @MessageMapping("/room/{roomID}")
     public void processMove(@DestinationVariable String roomID, Move message) throws Exception {
         System.out.println(String.format("Got destination message from %d, command: %d", message.getId(), message.getTurn()));
-        lobby.getRoom(Integer.parseInt(roomID)).getGame().turnPlayer(message.getId(), message.getTurn());
+        try {
+
+            lobby.getRoom(Integer.parseInt(roomID)).getGame().turnPlayer(message.getId(), message.getTurn());
+        } catch(NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
 
