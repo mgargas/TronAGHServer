@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/room")
@@ -24,8 +25,8 @@ public class RoomController {
     }
 
     @GetMapping
-    public Map<Integer, Room> getRooms() {
-        return lobby.getRooms();
+    public List<Room> getRooms() {
+        return new ArrayList<>(lobby.getRooms().values());
     }
 
     @GetMapping("/{id}")
