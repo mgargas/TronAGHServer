@@ -1,5 +1,6 @@
 package com.software.basement.tron.server.game;
 
+import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class Room {
     private Game game;
 
     public void createGame(){
-        game = new Game(50, 50);
+        game = new Game(50, 50, moveController);
     }
 
     public void setPlayersIds(List<Integer> playersIds){
