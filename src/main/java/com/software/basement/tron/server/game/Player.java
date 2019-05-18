@@ -32,15 +32,15 @@ public class Player {
         this.hasBeenRecentlyMoved = false;
     }
 
-    public int getX() {
+    public synchronized int getX() {
         return position.x;
     }
 
-    public int getY() {
+    public synchronized int getY() {
         return position.y;
     }
 
-    public void moveIteration() {
+    public synchronized void moveIteration() {
         hasBeenRecentlyMoved = false;
         this.countSpeed--;
         if (countSpeed == 0) {

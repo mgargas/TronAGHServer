@@ -9,13 +9,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class Game extends Thread {
 
     private int height;
     private int width;
-    private HashMap<Integer, Player> players;
+    private ConcurrentHashMap<Integer, Player> players;
     private int[][] board;
     private int numberOfLivePlayers;
     private int roomID;
@@ -27,7 +28,7 @@ public class Game extends Thread {
         this.width = width;
         this.moveController = moveController;
         this.roomID = roomID;
-        this.players = new HashMap<>();
+        this.players = new ConcurrentHashMap<>();
         this.board = new int[height][width];
     }
 
@@ -92,7 +93,7 @@ public class Game extends Thread {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
