@@ -56,7 +56,7 @@ public class Game extends Thread {
 
 
 
-    private void iteration() {
+    private void iteration() throws InterruptedException {
         for (Player player : players.values()) {
             if (!player.isDead())
                 player.moveIteration();
@@ -83,9 +83,9 @@ public class Game extends Thread {
 
     }
 
-    private void endGame(int id) {
+    private boolean endGame(int id) throws InterruptedException {
         this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
-        Thread.currentThread().interrupt();
+        throw new InterruptedException();
     }
 
     @Override
@@ -93,10 +93,11 @@ public class Game extends Thread {
         while (true) {
             try {
                 Thread.sleep(30);
+                iteration();
             } catch (InterruptedException e) {
                 return;
             }
-            iteration();
+
         }
     }
 
@@ -117,7 +118,7 @@ public class Game extends Thread {
         players.put(bot.getId(), bot);
     }
 
-    public void checkIfGameOver(){
+    public void checkIfGameOver() throws InterruptedException{
         if (numberOfLivePlayers <= 1){
             for(Player lastPlayer : players.values()){
                 if(!lastPlayer.getPosition().equals(new Point(-1, -1)))endGame(lastPlayer.getId());
