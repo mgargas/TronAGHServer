@@ -27,7 +27,7 @@ public class Player {
         this.countSpeed = 1;
         this.position = new Point(0, 0);
         this.name = name;
-        this.direction = null;
+        this.direction = Direction.N;
         this.isDead = false;
         this.hasBeenRecentlyMoved = false;
     }

@@ -107,4 +107,9 @@ public class Game extends Thread {
     public void addPlayer(int id) {
         players.put(id, new Player(id, "name"));
     }
+
+    public void addBot(){
+        Bot bot = new Bot(this);
+        players.put(bot.getId(), bot);
+    }
 }
