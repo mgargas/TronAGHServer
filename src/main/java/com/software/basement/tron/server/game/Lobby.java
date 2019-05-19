@@ -31,7 +31,6 @@ public class Lobby {
         room.setMoveController(moveController);
         room.setId(nextRoomId);
         rooms.put(nextRoomId, room);
-        room.roomTestStart();
         nextRoomId++;
     }
 

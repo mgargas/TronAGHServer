@@ -21,9 +21,18 @@ public class Room {
     private Integer maxPlayers = 6;
     private Integer minPlayers = 2;
     private List<Integer> playersIds = new ArrayList<>();
+    private boolean readyToStart;
+    private Integer creatorId;
 
     public void createGame() {
         game = new Game(50, 50, moveController, 0);
+    }
+
+    public void setReadyToStart(boolean readyToStart){
+        this.readyToStart = readyToStart;
+        if(this.readyToStart == true){
+            roomStart();
+        }
     }
 
 
@@ -31,12 +40,13 @@ public class Room {
         this.moveController = moveController;
     }
 
-    public void roomTestStart() {
+    public void roomStart() {
         try {
             if (playersIds.size() == 1) {
                 Thread.sleep(5000);
                 createGame();
-                game.addPlayer(playersIds.get(0));
+                for(Integer playerId : playersIds)
+                    game.addPlayer(playerId);
                 game.initGame();
                 game.start();
                 System.out.println("game started");
