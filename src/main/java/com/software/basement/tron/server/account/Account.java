@@ -9,24 +9,24 @@ public class Account {
     private String username;
     private String password;
     private Integer playerId;
-    private Integer wonGames;
+    private Integer wins;
 
     public Account(ObjectId id, String username, String password, Integer playerId) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.wonGames = 0;
+        this.wins = 0;
     }
 
     public Account() {
     }
 
-    public Integer getWonGames() {
-        return wonGames;
+    public Integer getWins() {
+        return wins;
     }
 
-    public void setWonGames(Integer wonGames) {
-        this.wonGames = wonGames;
+    public void setWins(Integer wins) {
+        this.wins = wins;
     }
 
     public ObjectId getId() {
