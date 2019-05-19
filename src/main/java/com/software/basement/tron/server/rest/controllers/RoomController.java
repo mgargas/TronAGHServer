@@ -42,6 +42,7 @@ public class RoomController {
 
     @PostMapping
     public Lobby createRoom(@RequestBody Room newRoom) {
+        System.out.println("Created new room");
         lobby.addRoom(newRoom);
         return lobby;
     }
