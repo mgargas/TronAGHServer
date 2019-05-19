@@ -39,7 +39,7 @@ public class Map {
                     //System.out.println(rgb);
 
                     if (red == 0 && green == 0 && blue == 0) {
-                        board[w][h] = 1;
+                        board[h][w] = 1;
                     }
                 }
             }
