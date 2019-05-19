@@ -24,10 +24,9 @@ public class MoveController {
 
 
     @MessageMapping("/room/{roomID}")
-    public void processMove(@DestinationVariable String roomID, Move message) throws Exception {
+    public void processMove(@DestinationVariable String roomID, Move message) {
         System.out.println(String.format("Got destination message from %d, command: %d", message.getId(), message.getTurn()));
         try {
-
             lobby.getRoom(Integer.parseInt(roomID)).getGame().turnPlayer(message.getId(), message.getTurn());
         } catch (NullPointerException e) {
             e.printStackTrace();
