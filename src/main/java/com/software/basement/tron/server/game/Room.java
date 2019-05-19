@@ -13,36 +13,43 @@ import java.util.List;
 public class Room {
 
     @JsonIgnore
-    private MoveController moveController;
-    @JsonIgnore
     private Game game;
 
     private Integer id;
+    private String name;
     private Integer maxPlayers = 6;
     private Integer minPlayers = 2;
     private List<Integer> playersIds = new ArrayList<>();
+    private boolean readyToStart;
+    private Integer creatorId;
 
     public void createGame() {
-        game = new Game(50, 50, moveController, 0);
+        game = new Game(50, 50, 0);
+    }
+
+    public void setReadyToStart(boolean readyToStart){
+        System.out.println("Set ready to start: " + readyToStart);
+        this.readyToStart = readyToStart;
+        if(this.readyToStart){
+            roomStart();
+        }
     }
 
 
-    public void setMoveController(MoveController moveController) {
-        this.moveController = moveController;
-    }
-
-    public void roomTestStart() {
-        try {
-            if (playersIds.size() == 1) {
+    public void roomStart() {
+        if(this.readyToStart) {
+            try {
                 Thread.sleep(5000);
                 createGame();
-                game.addPlayer(playersIds.get(0));
+                for (Integer playerId : playersIds)
+                    game.addPlayer(playerId);
                 game.initGame();
                 game.start();
-                System.out.println("game started");
+                System.out.println("Game started");
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 }

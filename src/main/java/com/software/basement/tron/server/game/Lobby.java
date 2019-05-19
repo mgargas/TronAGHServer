@@ -13,10 +13,6 @@ import java.util.Map;
 @Component
 public class Lobby {
 
-    @JsonIgnore
-    @Autowired
-    MoveController moveController;
-
     private static Integer nextRoomId = 0;
     private Map<Integer, Room> rooms = new HashMap<>();
 
@@ -28,10 +24,8 @@ public class Lobby {
     }
 
     public void addRoom(Room room) {
-        room.setMoveController(moveController);
         room.setId(nextRoomId);
         rooms.put(nextRoomId, room);
-        room.roomTestStart();
         nextRoomId++;
     }
 

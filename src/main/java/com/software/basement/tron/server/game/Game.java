@@ -1,5 +1,6 @@
 package com.software.basement.tron.server.game;
 
+import com.software.basement.tron.server.BeanUtil;
 import com.software.basement.tron.server.websockets.controllers.GameState;
 import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Data
 public class Game extends Thread {
 
+    private MoveController moveController;
     private int height;
     private int width;
     private ConcurrentHashMap<Integer, Player> players;
@@ -19,15 +21,14 @@ public class Game extends Thread {
     private int numberOfLivePlayers;
     private int roomID;
 
-    private MoveController moveController;
 
-    public Game(int height, int width, MoveController moveController, int roomID) {
+    public Game(int height, int width, int roomID) {
         this.height = height;
         this.width = width;
-        this.moveController = moveController;
         this.roomID = roomID;
         this.players = new ConcurrentHashMap<>();
         this.board = new int[height][width];
+        this.moveController = BeanUtil.getBean(MoveController.class);
     }
 
     public void initGame() {
@@ -47,14 +48,10 @@ public class Game extends Thread {
                 playersList.get(1).setPosition(new Point(40, 0));
         }
 
-        System.out.println(players.values());
         for (Player player : players.values()) {
             board[getHeight() - player.getY()][player.getX()] = 1;
         }
 
-
-        System.out.println(board[20][20]);
-        System.out.println(board[40][40]);
     }
 
     private void iteration() {
@@ -63,6 +60,7 @@ public class Game extends Thread {
                 player.moveIteration();
             try {
                 if (player.isHasBeenRecentlyMoved() && board[getHeight() - player.getY()][player.getX()] == 1) {
+                    System.out.println("Player with id = " + player.getId() + " died :(");
                     //TODO change it maybe
                     player.setDead(true);
                     player.setPosition(new Point(-1, -1));
