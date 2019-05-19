@@ -5,8 +5,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface AccountRepository extends MongoRepository<Account, String> {
-
     Account findById(ObjectId _id);
-
-
+    Account findByUsernameAndPassword(String username, String password);
 }

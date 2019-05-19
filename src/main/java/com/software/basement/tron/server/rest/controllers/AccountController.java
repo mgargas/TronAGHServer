@@ -2,12 +2,13 @@ package com.software.basement.tron.server.rest.controllers;
 
 
 import com.software.basement.tron.server.account.Account;
-import com.software.basement.tron.server.game.Lobby;
-import com.software.basement.tron.server.game.Room;
 import com.software.basement.tron.server.repository.AccountRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
@@ -16,28 +17,24 @@ public class AccountController {
     @Autowired
     AccountRepository accountsRepository;
 
-    @GetMapping("/{accountId}/{hashedPassword}")
-    public Account getAccount(@PathVariable("accountId") ObjectId accountId,
-                              @PathVariable("hashedPassword") String hashedPassword) {
-        Account account = accountsRepository.findById(accountId);
-        if(account.getHashedPassword().equals(hashedPassword))
-            return accountsRepository.findById(accountId);
-        else return null;
+    @GetMapping("/{username}/{password}")
+    public Account getAccount(@PathVariable("username") String username, @PathVariable("password") String password) {
+        return accountsRepository.findByUsernameAndPassword(username, password);
     }
 
-    @PutMapping
-    public Account editAccount(@RequestBody Account account) {
-        accountsRepository.save(account);
+    @GetMapping("/")
+    public List<Account> getAllAccounts() {
+        return accountsRepository.findAll();
+    }
+
+    @PostMapping("/")
+    public Account createAccount(@Valid @RequestBody Account account) {
+        if (accountsRepository.findByUsernameAndPassword(account.getUsername(), account.getPassword()) == null) {
+            account.setId(ObjectId.get());
+            accountsRepository.save(account);
+        }
         return account;
     }
-
-    @PostMapping
-    public Account createRoom(@RequestBody Account account) {
-        accountsRepository.save(account);
-        return account;
-    }
-
-
 
 
 }

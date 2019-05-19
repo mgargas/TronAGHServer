@@ -1,56 +1,42 @@
 package com.software.basement.tron.server.account;
 
-import com.sun.corba.se.spi.ior.ObjectId;
-import org.springframework.data.annotation.Id;
+
+import org.bson.types.ObjectId;
 
 public class Account {
 
-    @Id
-    public ObjectId _id;
-    private String name;
-    private String hashedPassword;
-    private int playedGames;
-    private int wonGames;
-
-    public Account() {}
-
-    public ObjectId get_id() {
-        return _id;
+    ObjectId id;
+    private String username;
+    private String password;
+    public Account(ObjectId id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+    public Account() {
     }
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
+    public ObjectId getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getUsername() {
+        return username;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public int getPlayedGames() {
-        return playedGames;
-    }
-
-    public void setPlayedGames(int playedGames) {
-        this.playedGames = playedGames;
-    }
-
-    public int getWonGames() {
-        return wonGames;
-    }
-
-    public void setWonGames(int wonGames) {
-        this.wonGames = wonGames;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
