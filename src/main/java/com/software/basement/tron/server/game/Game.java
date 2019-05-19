@@ -1,13 +1,11 @@
 package com.software.basement.tron.server.game;
 
 import com.software.basement.tron.server.websockets.controllers.GameState;
-
 import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -61,7 +59,7 @@ public class Game extends Thread {
 
     private void iteration() {
         for (Player player : players.values()) {
-            if(!player.isDead())
+            if (!player.isDead())
                 player.moveIteration();
             try {
                 if (player.isHasBeenRecentlyMoved() && board[getHeight() - player.getY()][player.getX()] == 1) {
@@ -74,12 +72,11 @@ public class Game extends Thread {
                 } else {
                     board[getHeight() - player.getY()][player.getX()] = 1;
                 }
-            } catch (IndexOutOfBoundsException ex){
+            } catch (IndexOutOfBoundsException ex) {
                 player.setDead(true);
                 player.setPosition(new Point(-1, -1));
             }
         }
-        if(moveController == null) System.out.println(">GAME>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NULLLL XDDDD");
         this.moveController.sendState(new GameState(this.players), String.valueOf(roomID));
 
     }
@@ -101,15 +98,15 @@ public class Game extends Thread {
         }
     }
 
-    public void turnPlayer(int id, int turn){
+    public void turnPlayer(int id, int turn) {
         Player player = players.get(id);
-        if(turn == -1)
+        if (turn == -1)
             player.setDirection(player.getDirection().turnLeft(player.getDirection()));
         else
             player.setDirection(player.getDirection().turnRight(player.getDirection()));
     }
 
-    public void addPlayer(int id){
-        players.put(id,new Player(id, "name"));
+    public void addPlayer(int id) {
+        players.put(id, new Player(id, "name"));
     }
 }

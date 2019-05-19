@@ -2,18 +2,11 @@ package com.software.basement.tron.server.websockets.controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.software.basement.tron.server.game.Lobby;
-import com.software.basement.tron.server.game.Player;
-import com.software.basement.tron.server.websockets.hello.GreetingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.util.HtmlUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MoveController {
@@ -25,7 +18,7 @@ public class MoveController {
     Lobby lobby;
 
     @Autowired
-    public MoveController(SimpMessagingTemplate template){
+    public MoveController(SimpMessagingTemplate template) {
         this.template = template;
     }
 
@@ -36,14 +29,14 @@ public class MoveController {
         try {
 
             lobby.getRoom(Integer.parseInt(roomID)).getGame().turnPlayer(message.getId(), message.getTurn());
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
 
-    public void sendState(GameState gameState, String roomID){
-        this.template.convertAndSend("/topic/room/"+roomID, gameState);
+    public void sendState(GameState gameState, String roomID) {
+        this.template.convertAndSend("/topic/room/" + roomID, gameState);
     }
 
 }

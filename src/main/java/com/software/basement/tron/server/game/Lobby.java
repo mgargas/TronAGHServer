@@ -28,7 +28,6 @@ public class Lobby {
     }
 
     public void addRoom(Room room) {
-        if(moveController == null) System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NULLLL XDDDD");
         room.setMoveController(moveController);
         room.setId(nextRoomId);
         rooms.put(nextRoomId, room);
