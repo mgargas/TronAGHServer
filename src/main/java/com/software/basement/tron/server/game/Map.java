@@ -23,14 +23,17 @@ public class Map {
                 img = ImageIO.read(new File(getClass().getClassLoader().getResource("AGH.png").getFile()));
                 int height = img.getHeight();
                 int width = img.getWidth();
+                //System.out.println(height + "  " + width + " " + img.getRGB(30, 30));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             //System.out.println(height + "  " + width + " " + img.getRGB(30, 30));
 
-            for (int h = 1; h < height; h++) {
-                for (int w = 1; w < width; w++) {
+
+            for (int h = 0; h < height; h++) {
+                for (int w = 0; w < width; w++) {
 
                     int rgb = img.getRGB(w, h);
                     int red = (rgb >> 16) & 0x000000FF;
