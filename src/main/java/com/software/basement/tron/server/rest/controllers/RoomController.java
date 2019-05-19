@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/room")
 public class RoomController {
+
     private final Lobby lobby;
 
     @Autowired
