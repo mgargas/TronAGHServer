@@ -36,9 +36,9 @@ public class Game extends Thread {
 
         List<Player> playersList = new ArrayList<>(players.values());
 
-        Map map = new Map(height, width);
+        //Map map = new Map(height, width);
 
-        map.fillBoard(this.board);
+        //map.fillBoard(this.board);
 
         switch (players.size()) {
             case 1:
@@ -50,6 +50,7 @@ public class Game extends Thread {
                 playersList.get(0).setPosition(new Point(10, 10));
                 playersList.get(1).setDirection(Direction.N);
                 playersList.get(1).setPosition(new Point(40, 10));
+                break;
         }
 
         for (Player player : players.values()) {
@@ -66,7 +67,6 @@ public class Game extends Thread {
                 player.moveIteration();
             try {
                 if (player.isHasBeenRecentlyMoved() && board[getHeight() - player.getY()][player.getX()] == 1) {
-                    System.out.println("Player with id = " + player.getId() + " died :(");
                     //TODO change it maybe
                     player.setDead(true);
                     player.setPosition(new Point(-1, -1));
@@ -77,7 +77,6 @@ public class Game extends Thread {
                     board[getHeight() - player.getY()][player.getX()] = 1;
                 }
             } catch (IndexOutOfBoundsException ex) {
-                System.out.println("Player with id = " + player.getId() + " died :(");
                 player.setDead(true);
                 player.setPosition(new Point(-1, -1));
                 checkIfGameOver();
