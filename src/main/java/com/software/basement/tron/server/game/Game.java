@@ -43,9 +43,9 @@ public class Game extends Thread {
                 break;
             case 2:
                 playersList.get(0).setDirection(Direction.N);
-                playersList.get(0).setPosition(new Point(10, 0));
+                playersList.get(0).setPosition(new Point(10, 10));
                 playersList.get(1).setDirection(Direction.N);
-                playersList.get(1).setPosition(new Point(40, 0));
+                playersList.get(1).setPosition(new Point(40, 10));
         }
 
         for (Player player : players.values()) {
@@ -53,6 +53,8 @@ public class Game extends Thread {
         }
 
     }
+
+
 
     private void iteration() {
         for (Player player : players.values()) {
@@ -65,32 +67,34 @@ public class Game extends Thread {
                     player.setDead(true);
                     player.setPosition(new Point(-1, -1));
                     numberOfLivePlayers--;
-                    if (numberOfLivePlayers == 1) endGame();
+                    checkIfGameOver();
 
                 } else {
                     board[getHeight() - player.getY()][player.getX()] = 1;
                 }
             } catch (IndexOutOfBoundsException ex) {
+                System.out.println("Player with id = " + player.getId() + " died :(");
                 player.setDead(true);
                 player.setPosition(new Point(-1, -1));
+                checkIfGameOver();
             }
         }
-        this.moveController.sendState(new GameState(this.players), String.valueOf(roomID));
+        this.moveController.sendState(new GameState(this.players, false, -1), String.valueOf(roomID));
 
     }
 
-    private void endGame() {
-        //TODO send info about end game and result in the future
-        interrupt();
+    private void endGame(int id) {
+        this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
+        Thread.currentThread().interrupt();
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                Thread.sleep(300);
+                Thread.sleep(30);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                return;
             }
             iteration();
         }
@@ -111,5 +115,13 @@ public class Game extends Thread {
     public void addBot(){
         Bot bot = new Bot(this);
         players.put(bot.getId(), bot);
+    }
+
+    public void checkIfGameOver(){
+        if (numberOfLivePlayers <= 1){
+            for(Player lastPlayer : players.values()){
+                if(!lastPlayer.getPosition().equals(new Point(-1, -1)))endGame(lastPlayer.getId());
+            }
+        }
     }
 }

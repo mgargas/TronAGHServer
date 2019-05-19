@@ -28,7 +28,7 @@ public class Room {
     }
 
     public void setReadyToStart(boolean readyToStart){
-        System.out.println("Set ready to start: " + readyToStart);
+        System.out.println("Set ready to start: " + readyToStart + "room id = " + id);
         this.readyToStart = readyToStart;
         if(this.readyToStart){
             roomStart();
