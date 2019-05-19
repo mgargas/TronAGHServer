@@ -25,6 +25,7 @@ public class Room {
 
     public void createGame() {
         game = new Game(50, 50, id);
+
     }
 
     public void setReadyToStart(boolean readyToStart){
