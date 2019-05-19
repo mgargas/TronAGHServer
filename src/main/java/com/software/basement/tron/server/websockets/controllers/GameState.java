@@ -11,8 +11,12 @@ import java.util.Map;
 public class GameState {
 
     private List<PlayerInfo> playersInfo;
+    private boolean isGameOver;
+    private int winnerId;
 
-    public GameState(Map<Integer, Player> playerMap) {
+    public GameState(Map<Integer, Player> playerMap, boolean isGameOver, int winnerId) {
+        this.winnerId = winnerId;
+        this.isGameOver = isGameOver;
         playersInfo = new ArrayList<>();
 
         for (Player player : playerMap.values()) {

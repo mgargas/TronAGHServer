@@ -24,11 +24,12 @@ public class Room {
     private Integer creatorId;
 
     public void createGame() {
-        game = new Game(600, 800, 0);
+        game = new Game(50, 50, id);
+
     }
 
     public void setReadyToStart(boolean readyToStart){
-        System.out.println("Set ready to start: " + readyToStart);
+        System.out.println("Set ready to start: " + readyToStart + "room id = " + id);
         this.readyToStart = readyToStart;
         if(this.readyToStart){
             roomStart();
