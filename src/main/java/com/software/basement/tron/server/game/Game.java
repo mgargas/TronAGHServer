@@ -36,6 +36,10 @@ public class Game extends Thread {
 
         List<Player> playersList = new ArrayList<>(players.values());
 
+        Map map = new Map(height, width);
+
+        map.fillBoard(this.board);
+
         switch (players.size()) {
             case 1:
                 playersList.get(0).setDirection(Direction.N);
