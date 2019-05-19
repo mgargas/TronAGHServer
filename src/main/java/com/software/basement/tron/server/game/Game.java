@@ -17,7 +17,8 @@ import static com.software.basement.tron.server.game.BonusType.*;
 @Data
 public class Game extends Thread {
 
-    private static final int TIME_GAP_BETWEEN_BONUSES = 20;
+    private static final int TIME_GAP_BETWEEN_BONUS_SPAWNS = 20;
+    private static final int BONUS_DURATION = 30;
 
     private MoveController moveController;
     private int height;
@@ -36,7 +37,7 @@ public class Game extends Thread {
         this.width = width;
         this.size = height * width;
         this.roomID = roomID;
-        this.iterationsToBonusSpawn = TIME_GAP_BETWEEN_BONUSES;
+        this.iterationsToBonusSpawn = TIME_GAP_BETWEEN_BONUS_SPAWNS;
         this.players = new ConcurrentHashMap<>();
         this.bonuses = new CopyOnWriteArrayList<>();
         this.board = new int[height][width];
@@ -97,7 +98,7 @@ public class Game extends Thread {
 
     private void updateIterationsToBonusSpawn() {
         if (iterationsToBonusSpawn == 0) {
-            iterationsToBonusSpawn = TIME_GAP_BETWEEN_BONUSES;
+            iterationsToBonusSpawn = TIME_GAP_BETWEEN_BONUS_SPAWNS;
         } else {
             iterationsToBonusSpawn--;
         }
@@ -119,11 +120,9 @@ public class Game extends Thread {
                             if (numberOfLivePlayers == 1) endGame();
                         }
                     } else {
-                        if (playerCurrentPosition == IMMORTALITY.getId()) {
-                            player.setImmortal(true);
-                        } else if (playerCurrentPosition == SPEED_UP.getId()) {
-
-                        }
+                        BonusType bonusCollected = BonusType.fromId(playerCurrentPosition);
+                        player.getBonusesIterationsLeft().put(bonusCollected, BONUS_DURATION);
+                        player.activateBonus(bonusCollected);
                         Bonus bonus = bonuses.stream()
                                 .filter(b -> b.getPosition().y == (getHeight() - player.getY()) && b.getPosition().x == player.getX())
                                 .findFirst()

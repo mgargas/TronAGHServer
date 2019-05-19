@@ -3,6 +3,10 @@ package com.software.basement.tron.server.game;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.software.basement.tron.server.game.BonusType.*;
 
 @Data
 public class Player {
@@ -15,6 +19,7 @@ public class Player {
     private Point position;
     private String name;
     private Direction direction;
+    private Map<BonusType, Integer> bonusesIterationsLeft;
     private boolean isDead;
     private boolean hasBeenRecentlyMoved;
 
@@ -30,6 +35,7 @@ public class Player {
         this.direction = Direction.N;
         this.isDead = false;
         this.hasBeenRecentlyMoved = false;
+        this.bonusesIterationsLeft = new HashMap<>();
     }
 
     public synchronized int getX() {
@@ -41,6 +47,7 @@ public class Player {
     }
 
     public synchronized void moveIteration() {
+        updateBonusesIterationsLeft();
         hasBeenRecentlyMoved = false;
         this.countSpeed--;
         if (countSpeed == 0) {
@@ -48,6 +55,25 @@ public class Player {
             countSpeed = speed;
             move();
         }
+    }
+
+    public void activateBonus(BonusType bonus) {
+        if (bonus == IMMORTALITY) this.setImmortal(true);
+        if (bonus == SPEED_UP) this.setSpeed(speed / 2);
+    }
+
+    private void updateBonusesIterationsLeft() {
+        bonusesIterationsLeft.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .forEach(entry -> bonusesIterationsLeft.put(entry.getKey(), entry.getValue() - 1));
+        bonusesIterationsLeft.entrySet().stream()
+                .filter(entry -> entry.getValue() == 0)
+                .forEach(entry -> deactivateBonus(entry.getKey()));
+    }
+
+    private void deactivateBonus(BonusType bonus) {
+        if (bonus == IMMORTALITY) this.setImmortal(false);
+        if (bonus == SPEED_UP) this.setSpeed(speed * 2);
     }
 
     public void move() {
