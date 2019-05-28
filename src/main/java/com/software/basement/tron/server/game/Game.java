@@ -43,13 +43,13 @@ public class Game extends Thread {
         switch (players.size()) {
             case 1:
                 playersList.get(0).setDirection(Direction.N);
-                playersList.get(0).setPosition(new Point(25, 10));
+                playersList.get(0).setPosition(new Point(25, 25));
                 break;
             case 2:
                 playersList.get(0).setDirection(Direction.N);
-                playersList.get(0).setPosition(new Point(10, 10));
+                playersList.get(0).setPosition(new Point(10, 25));
                 playersList.get(1).setDirection(Direction.N);
-                playersList.get(1).setPosition(new Point(40, 10));
+                playersList.get(1).setPosition(new Point(90, 25));
                 break;
         }
 
@@ -126,6 +126,7 @@ public class Game extends Thread {
             for(Player lastPlayer : players.values()){
                 if(!lastPlayer.isDead()) endGame(lastPlayer.getId());
             }
+            endGame(-1);
         }
     }
 
