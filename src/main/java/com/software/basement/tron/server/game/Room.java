@@ -24,7 +24,7 @@ public class Room {
     private Integer creatorId;
 
     public void createGame() {
-        game = new Game(50, 100, id);
+        game = new Game(50, 50, id);
 
     }
 
