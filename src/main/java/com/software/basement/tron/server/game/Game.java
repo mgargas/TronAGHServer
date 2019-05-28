@@ -95,7 +95,7 @@ public class Game extends Thread {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(30);
+                Thread.sleep(100);
                 iteration();
             } catch (InterruptedException e) {
                 return;

@@ -23,8 +23,8 @@ public class Player {
         this.id = id;
         this.lives = 3;
         this.isImmortal = false;
-        this.speed = 6;
-        this.countSpeed = 6;
+        this.speed = 1;
+        this.countSpeed = 1;
         this.position = new Point(0, 0);
         this.name = name;
         this.direction = Direction.N;
