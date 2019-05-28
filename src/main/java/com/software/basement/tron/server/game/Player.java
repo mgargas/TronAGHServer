@@ -44,6 +44,7 @@ public class Player {
         hasBeenRecentlyMoved = false;
         this.countSpeed--;
         if (countSpeed == 0) {
+            System.out.println("Player moved");
             hasBeenRecentlyMoved = true;
             countSpeed = speed;
             move();

@@ -68,6 +68,7 @@ public class Game extends Thread {
             try {
                 if (player.isHasBeenRecentlyMoved() && board[getHeight() - player.getY()][player.getX()] == 1) {
                     //TODO change it maybe
+                    System.out.println("Someone died :O");
                     player.setDead(true);
                     player.setPosition(new Point(-1, -1));
                     numberOfLivePlayers--;
@@ -84,11 +85,6 @@ public class Game extends Thread {
         }
         this.moveController.sendState(new GameState(this.players, false, -1), String.valueOf(roomID));
 
-    }
-
-    private boolean endGame(int id) throws InterruptedException {
-        this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
-        throw new InterruptedException();
     }
 
     @Override
@@ -122,10 +118,16 @@ public class Game extends Thread {
     }
 
     public void checkIfGameOver() throws InterruptedException{
+        System.out.println("Number of live player " + numberOfLivePlayers);
         if (numberOfLivePlayers <= 1){
-            for(Player lastPlayer : players.values()){
-                if(!lastPlayer.getPosition().equals(new Point(-1, -1)))endGame(lastPlayer.getId());
-            }
+            endGame();
         }
+    }
+
+    public void endGame() throws InterruptedException {
+        for(Player lastPlayer : players.values()){
+            this.moveController.sendState(new GameState(this.players, true, lastPlayer.getId()), String.valueOf(roomID));
+        }
+        throw new InterruptedException();
     }
 }
