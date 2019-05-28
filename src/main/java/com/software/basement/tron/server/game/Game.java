@@ -94,7 +94,7 @@ public class Game extends Thread {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(150);
                 iteration();
             } catch (InterruptedException e) {
                 return;
@@ -123,13 +123,15 @@ public class Game extends Thread {
     public void checkIfGameOver() throws InterruptedException{
         System.out.println("Number of live player " + numberOfLivePlayers);
         if (numberOfLivePlayers <= 1){
-            endGame();
+            for(Player lastPlayer : players.values()){
+                if(!lastPlayer.isDead()) endGame(lastPlayer.getId());
+            }
         }
     }
 
-    public void endGame() throws InterruptedException {
+    public void endGame(int id) throws InterruptedException {
         for(Player lastPlayer : players.values()){
-            this.moveController.sendState(new GameState(this.players, true, lastPlayer.getId()), String.valueOf(roomID));
+            this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
         }
         throw new InterruptedException();
     }
