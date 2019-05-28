@@ -73,14 +73,17 @@ public class Game extends Thread {
                     player.setPosition(new Point(-1, -1));
                     numberOfLivePlayers--;
                     checkIfGameOver();
+                    System.out.println("DEAD POSITION " +player.getPosition());
 
                 } else {
                     board[getHeight() - player.getY()][player.getX()] = 1;
                 }
             } catch (IndexOutOfBoundsException ex) {
                 player.setDead(true);
+                numberOfLivePlayers--;
                 player.setPosition(new Point(-1, -1));
                 checkIfGameOver();
+                System.out.println("POSITION " +player.getPosition());
             }
         }
         this.moveController.sendState(new GameState(this.players, false, -1), String.valueOf(roomID));
