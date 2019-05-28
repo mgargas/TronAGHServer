@@ -1,6 +1,8 @@
 package com.software.basement.tron.server.game;
 
 import com.software.basement.tron.server.BeanUtil;
+import com.software.basement.tron.server.account.Account;
+import com.software.basement.tron.server.repository.AccountRepository;
 import com.software.basement.tron.server.websockets.controllers.GameState;
 import com.software.basement.tron.server.websockets.controllers.MoveController;
 import lombok.Data;
@@ -20,6 +22,7 @@ public class Game extends Thread {
     private int[][] board;
     private int numberOfLivePlayers;
     private int roomID;
+    private AccountRepository accountsRepository;
 
 
     public Game(int height, int width, int roomID) {
@@ -29,6 +32,7 @@ public class Game extends Thread {
         this.players = new ConcurrentHashMap<>();
         this.board = new int[height][width];
         this.moveController = BeanUtil.getBean(MoveController.class);
+        this.accountsRepository = BeanUtil.getBean(AccountRepository.class);
     }
 
     public void initGame() {
@@ -135,5 +139,13 @@ public class Game extends Thread {
             this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
         }
         throw new InterruptedException();
+    }
+
+    private void incrementWins(Integer playerId) {
+        Account account = accountsRepository.findByPlayerId(playerId);
+        if (account != null) {
+            account.setWins(account.getWins() + 1);
+            accountsRepository.save(account);
+        }
     }
 }

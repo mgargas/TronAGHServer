@@ -35,6 +35,7 @@ public class MoveController {
 
 
     public void sendState(GameState gameState, String roomID) {
+        System.out.println("GAME ROOM "  + roomID);
         this.template.convertAndSend("/topic/room/" + roomID, gameState);
     }
 
