@@ -42,8 +42,10 @@ public class Room {
             try {
                 Thread.sleep(5000);
                 createGame();
-                for (Integer playerId : playersIds)
+                for (Integer playerId : playersIds) {
                     game.addPlayer(playerId);
+                    System.out.println("player added = "+playerId);
+                }
                 game.initGame();
                 game.start();
                 System.out.println("Game started");

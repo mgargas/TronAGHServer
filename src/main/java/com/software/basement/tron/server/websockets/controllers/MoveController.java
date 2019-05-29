@@ -36,6 +36,8 @@ public class MoveController {
 
     public void sendState(GameState gameState, String roomID) {
         System.out.println("GAME ROOM "  + roomID);
+        System.out.println("GAME STATE "  + gameState);
+        // TODO : client cannot see that :
         this.template.convertAndSend("/topic/room/" + roomID, gameState);
     }
 
