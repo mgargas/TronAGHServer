@@ -24,7 +24,7 @@ public class Room {
     private Integer creatorId;
 
     public void createGame() {
-        game = new Game(50, 50, id);
+        game = new Game(100, 50, id);
 
     }
 
@@ -32,7 +32,7 @@ public class Room {
         System.out.println("Set ready to start: " + readyToStart + "room id = " + id);
         this.readyToStart = readyToStart;
         if(this.readyToStart){
-            roomStart();
+            new Thread(this::roomStart).start();
         }
     }
 
@@ -40,12 +40,16 @@ public class Room {
     public void roomStart() {
         if(this.readyToStart) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3000);
                 createGame();
                 for (Integer playerId : playersIds) {
                     game.addPlayer(playerId);
                     System.out.println("player added = "+playerId);
                 }
+                if(playersIds.size() < 2)
+                    game.addBot(6968);
+                if(playersIds.size() < 3)
+                    game.addBot(9695);
                 game.initGame();
                 game.start();
                 System.out.println("Game started");

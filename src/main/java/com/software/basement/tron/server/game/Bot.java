@@ -8,9 +8,10 @@ public class Bot extends Player {
     private int moveLength;
     private Game game;
     private Random rand;
+    private int randMove = 12;
 
-    public Bot(Game game){
-        super(100003, "Bot");
+    public Bot(Game game, int id){
+        super(id, "Bot");
         this.game = game;
         this.rand = new Random();
         this.moveLength = 5;
@@ -144,11 +145,15 @@ public class Bot extends Player {
     public void move() {
 
         //moveLength--;
-
-        super.move();
-
+        randMove--;
+        if(randMove <= 0){
+            turnRandomly();
+            randMove = (Math.abs(rand.nextInt(144) % 12) + 35);
+        }
         avoidObstacle(getDirection());
 
+
+        super.move();
 
 
 //        if (moveLength == 0) {

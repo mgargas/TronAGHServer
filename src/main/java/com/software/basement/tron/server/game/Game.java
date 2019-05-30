@@ -23,6 +23,7 @@ public class Game extends Thread {
     private int numberOfLivePlayers;
     private int roomID;
     private AccountRepository accountsRepository;
+    private Lobby lobby;
 
 
     public Game(int height, int width, int roomID) {
@@ -33,10 +34,12 @@ public class Game extends Thread {
         this.board = new int[height][width];
         this.moveController = BeanUtil.getBean(MoveController.class);
         this.accountsRepository = BeanUtil.getBean(AccountRepository.class);
+        this.lobby = BeanUtil.getBean(Lobby.class);
     }
 
     public void initGame() {
         numberOfLivePlayers = players.size();
+        System.out.println("Live players ============================ " + numberOfLivePlayers);
 
         List<Player> playersList = new ArrayList<>(players.values());
 
@@ -51,9 +54,17 @@ public class Game extends Thread {
                 break;
             case 2:
                 playersList.get(0).setDirection(Direction.S);
-                playersList.get(0).setPosition(new Point(25, 45));
+                playersList.get(0).setPosition(new Point(25, 95));
                 playersList.get(1).setDirection(Direction.N);
                 playersList.get(1).setPosition(new Point(25, 5));
+                break;
+            case 3:
+                playersList.get(0).setDirection(Direction.S);
+                playersList.get(0).setPosition(new Point(15, 95));
+                playersList.get(1).setDirection(Direction.N);
+                playersList.get(1).setPosition(new Point(15, 5));
+                playersList.get(2).setDirection(Direction.W);
+                playersList.get(2).setPosition(new Point(45, 50));
                 break;
         }
 
@@ -69,6 +80,8 @@ public class Game extends Thread {
         for (Player player : players.values()) {
             if (!player.isDead())
                 player.moveIteration();
+            else
+                continue;
             try {
                 if (player.isHasBeenRecentlyMoved() && board[getHeight() - player.getY()][player.getX()] == 1) {
                     //TODO change it maybe
@@ -76,6 +89,7 @@ public class Game extends Thread {
                     player.setDead(true);
                     player.setPosition(new Point(-1, -1));
                     numberOfLivePlayers--;
+                    System.out.println("Live players -- in if");
                     checkIfGameOver();
                     System.out.println("DEAD POSITION " +player.getPosition());
 
@@ -85,6 +99,7 @@ public class Game extends Thread {
             } catch (IndexOutOfBoundsException ex) {
                 player.setDead(true);
                 numberOfLivePlayers--;
+                System.out.println("Live players --");
                 player.setPosition(new Point(-1, -1));
                 checkIfGameOver();
                 System.out.println("POSITION " +player.getPosition());
@@ -101,6 +116,7 @@ public class Game extends Thread {
                 Thread.sleep(70);
                 iteration();
             } catch (InterruptedException e) {
+                this.lobby.deleteRoom(this.roomID);
                 return;
             }
 
@@ -119,8 +135,8 @@ public class Game extends Thread {
         players.put(id, new Player(id, "name"));
     }
 
-    public void addBot(){
-        Bot bot = new Bot(this);
+    public void addBot(int id){
+        Bot bot = new Bot(this, id);
         players.put(bot.getId(), bot);
     }
 
@@ -135,9 +151,8 @@ public class Game extends Thread {
     }
 
     public void endGame(int id) throws InterruptedException {
-        for(Player lastPlayer : players.values()){
-            this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
-        }
+        incrementWins(id);
+        this.moveController.sendState(new GameState(this.players, true, id), String.valueOf(roomID));
         throw new InterruptedException();
     }
 

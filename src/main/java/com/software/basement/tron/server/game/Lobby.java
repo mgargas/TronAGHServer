@@ -32,4 +32,8 @@ public class Lobby {
     private boolean roomExists(Integer roomId) {
         return rooms.get(roomId) != null;
     }
+
+    public void deleteRoom(int id){
+        this.rooms.remove(id);
+    }
 }
